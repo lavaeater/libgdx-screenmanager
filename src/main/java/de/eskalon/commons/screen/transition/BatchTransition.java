@@ -17,6 +17,7 @@ package de.eskalon.commons.screen.transition;
 
 import javax.annotation.Nullable;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
@@ -33,7 +34,7 @@ import de.eskalon.commons.screen.transition.impl.BlankTimedTransition;
  */
 public abstract class BatchTransition extends BlankTimedTransition {
 
-	protected SpriteBatch batch;
+	protected Batch batch;
 	protected Viewport viewport;
 	protected int width, height;
 
@@ -45,7 +46,7 @@ public abstract class BatchTransition extends BlankTimedTransition {
 	 * @param duration
 	 * @param interpolation
 	 */
-	public BatchTransition(SpriteBatch batch, float duration,
+	public BatchTransition(Batch batch, float duration,
 			@Nullable Interpolation interpolation) {
 		super(duration, interpolation);
 		Preconditions.checkNotNull(batch);
