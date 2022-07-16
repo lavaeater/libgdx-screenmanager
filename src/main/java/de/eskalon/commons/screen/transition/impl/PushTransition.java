@@ -17,7 +17,7 @@ package de.eskalon.commons.screen.transition.impl;
 
 import javax.annotation.Nullable;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 
@@ -46,7 +46,7 @@ public class PushTransition extends BatchTransition {
 	 * @param interpolation
 	 *            the interpolation used
 	 */
-	public PushTransition(SpriteBatch batch, SlidingDirection dir,
+	public PushTransition(Batch batch, SlidingDirection dir,
 			float duration, @Nullable Interpolation interpolation) {
 		super(batch, duration, interpolation);
 		Preconditions.checkNotNull(dir);
@@ -62,7 +62,7 @@ public class PushTransition extends BatchTransition {
 	 * @param duration
 	 *            the duration over which the transition should happen
 	 */
-	public PushTransition(SpriteBatch batch, SlidingDirection dir,
+	public PushTransition(Batch batch, SlidingDirection dir,
 			float duration) {
 		this(batch, dir, duration, null);
 	}

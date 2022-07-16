@@ -1,5 +1,5 @@
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
 
 import de.eskalon.commons.core.ManagedGame;
@@ -13,14 +13,14 @@ import de.eskalon.commons.screen.transition.impl.SlidingOutTransition;
 public class MyGdxGame extends ManagedGame<ManagedScreen, ScreenTransition> {
 
 	public static final String TITLE = "MyGdxGame";
-	private SpriteBatch batch;
+	private Batch batch;
 
 	@Override
 	public final void create() {
 		super.create();
 
 		// Do some basic stuff
-		this.batch = new SpriteBatch();
+		this.batch = new Batch();
 
 		// Add screens
 		this.screenManager.addScreen("green", new GreenScreen());

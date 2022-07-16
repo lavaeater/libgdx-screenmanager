@@ -17,7 +17,7 @@ package de.eskalon.commons.screen.transition;
 
 import javax.annotation.Nullable;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 
@@ -43,7 +43,7 @@ public class SlidingTransition extends BatchTransition {
 	 */
 	private boolean slideLastScreen;
 
-	public SlidingTransition(SpriteBatch batch, SlidingDirection dir,
+	public SlidingTransition(Batch batch, SlidingDirection dir,
 			boolean slideLastScreen, float duration,
 			@Nullable Interpolation interpolation) {
 		super(batch, duration, interpolation);

@@ -17,7 +17,7 @@ package de.eskalon.commons.screen.transition.impl;
 
 import javax.annotation.Nullable;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.HdpiUtils;
 import com.badlogic.gdx.math.Interpolation;
@@ -46,7 +46,7 @@ public class HorizontalSlicingTransition extends BatchTransition {
 	 * @param interpolation
 	 *            the interpolation used
 	 */
-	public HorizontalSlicingTransition(SpriteBatch batch, int sliceCount,
+	public HorizontalSlicingTransition(Batch batch, int sliceCount,
 			float duration, @Nullable Interpolation interpolation) {
 		super(batch, duration, interpolation);
 		Preconditions.checkArgument(sliceCount >= 2,
@@ -63,7 +63,7 @@ public class HorizontalSlicingTransition extends BatchTransition {
 	 * @param duration
 	 *            the duration over which the transition should happen
 	 */
-	public HorizontalSlicingTransition(SpriteBatch batch, int sliceCount,
+	public HorizontalSlicingTransition(Batch batch, int sliceCount,
 			float duration) {
 		this(batch, sliceCount, duration, null);
 	}

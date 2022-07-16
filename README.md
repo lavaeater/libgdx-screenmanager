@@ -29,7 +29,7 @@ public class MyGdxGame extends ManagedGame<MyScreenClass, ScreenTransition> {
 		super.create();
 
 		// Do some basic stuff
-		this.batch = new SpriteBatch();
+		this.batch = new Batch();
 
 		// Add screens
 		this.screenManager.addScreen("green", new GreenScreen());

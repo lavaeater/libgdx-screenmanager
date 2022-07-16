@@ -18,7 +18,7 @@ package de.eskalon.commons.screen.transition.impl;
 import javax.annotation.Nullable;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 
@@ -32,12 +32,12 @@ import de.eskalon.commons.screen.transition.BatchTransition;
  */
 public class BlendingTransition extends BatchTransition {
 
-	public BlendingTransition(SpriteBatch batch, float duration,
+	public BlendingTransition(Batch batch, float duration,
 			@Nullable Interpolation interpolation) {
 		super(batch, duration, interpolation);
 	}
 
-	public BlendingTransition(SpriteBatch batch, float duration) {
+	public BlendingTransition(Batch batch, float duration) {
 		this(batch, duration, null);
 	}
 
