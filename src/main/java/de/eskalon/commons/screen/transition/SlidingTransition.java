@@ -15,7 +15,7 @@
 
 package de.eskalon.commons.screen.transition;
 
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -27,7 +27,7 @@ import de.eskalon.commons.screen.transition.impl.SlidingInTransition;
 import de.eskalon.commons.screen.transition.impl.SlidingOutTransition;
 
 /**
- * The base class for sliding screen transitions.
+ * The base class for sliding screen transitions. Can be reused.
  *
  * @author damios
  * 

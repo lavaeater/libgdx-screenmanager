@@ -15,7 +15,7 @@
 
 package de.eskalon.commons.screen.transition.impl;
 
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
@@ -23,7 +23,7 @@ import com.badlogic.gdx.math.Interpolation;
 import de.eskalon.commons.screen.transition.SlidingTransition;
 
 /**
- * A transition where the last screen is sliding out.
+ * A transition where the last screen is sliding out. Can be reused.
  * 
  * @since 0.3.0
  * @author damios
@@ -34,11 +34,12 @@ public class SlidingOutTransition extends SlidingTransition {
 
 	/**
 	 * @param batch
-	 *            the sprite batch used to render
+	 *            the sprite batch used to render; is <i>not</i> disposed by the
+	 *            transition
 	 * @param dir
 	 *            the direction the last screen should slide to
 	 * @param duration
-	 *            the duration over which the slide should happen
+	 *            the duration (in seconds) over which the slide should happen
 	 * @param interpolation
 	 *            the interpolation used
 	 */
@@ -49,11 +50,12 @@ public class SlidingOutTransition extends SlidingTransition {
 
 	/**
 	 * @param batch
-	 *            the sprite batch used to render
+	 *            the sprite batch used to render; is <i>not</i> disposed by the
+	 *            transition
 	 * @param dir
 	 *            the direction the last screen should slide to
 	 * @param duration
-	 *            the duration over which the slide should happen
+	 *            the duration (in seconds) over which the slide should happen
 	 */
 	public SlidingOutTransition(Batch batch, SlidingDirection dir,
 			float duration) {

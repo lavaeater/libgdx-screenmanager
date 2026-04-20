@@ -15,7 +15,7 @@
 
 package de.eskalon.commons.screen.transition.impl;
 
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
@@ -23,18 +23,28 @@ import com.badlogic.gdx.math.Interpolation;
 import de.eskalon.commons.screen.transition.TimedTransition;
 
 /**
- * A blank screen transition going on for a given duration.
+ * A blank screen transition going on for a given duration. Can be reused.
  * 
  * @since 0.3.0
  * @author damios
  */
 public class BlankTimedTransition extends TimedTransition {
 
+	/**
+	 * @param duration
+	 *            the transition's duration in seconds
+	 * @param interpolation
+	 *            the interpolation to use
+	 */
 	public BlankTimedTransition(float duration,
 			@Nullable Interpolation interpolation) {
 		super(duration, interpolation);
 	}
 
+	/**
+	 * @param duration
+	 *            the transition's duration in seconds
+	 */
 	public BlankTimedTransition(float duration) {
 		this(duration, null);
 	}
@@ -43,11 +53,6 @@ public class BlankTimedTransition extends TimedTransition {
 	public void render(float delta, TextureRegion lastScreen,
 			TextureRegion currScreen, float progress) {
 		// do nothing
-	}
-
-	@Override
-	protected void create() {
-		// not needed
 	}
 
 	@Override

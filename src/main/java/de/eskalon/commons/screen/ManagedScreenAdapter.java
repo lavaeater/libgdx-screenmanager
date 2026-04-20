@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 damios
+ * Copyright 2023 damios
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,32 @@
 
 package de.eskalon.commons.screen;
 
+import com.badlogic.gdx.ScreenAdapter;
+
 /**
- * A blank screen.
+ * Convenience implementation of {@link ManagedScreen} inspired by
+ * {@link ScreenAdapter}. Inherit from this class and only override the methods
+ * that you need.
  * <p>
- * Is used internally when no screen has been pushed yet.
+ * Check out the documentation of {@link ManagedScreen}!
  * 
- * @author damios
+ * @author Frosty-J
  */
-class BlankScreen extends ManagedScreenAdapter {
+public class ManagedScreenAdapter extends ManagedScreen {
+
+	@Override
+	public void render(float delta) {
+		// don't do anything by default
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		// don't do anything by default
+	}
+
+	@Override
+	public void dispose() {
+		// don't do anything by default
+	}
 
 }

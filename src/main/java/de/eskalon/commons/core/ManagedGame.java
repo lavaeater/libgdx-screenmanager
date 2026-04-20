@@ -16,6 +16,7 @@
 package de.eskalon.commons.core;
 
 import com.badlogic.gdx.Application;
+import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -28,10 +29,7 @@ import de.eskalon.commons.utils.BasicInputMultiplexer;
 /**
  * A game class that utilizes a {@linkplain ScreenManager screen manager}. Use
  * the {@linkplain #getScreenManager() provided instance} to
- * {@linkplain ScreenManager#addScreen(String, ManagedScreen) register screens}
- * and {@linkplain ScreenManager#addScreenTransition(String, ScreenTransition)
- * transitions}, as well as to
- * {@linkplain ScreenManager#pushScreen(String, String, Object...) push those
+ * {@linkplain ScreenManager#pushScreen(ManagedScreen, ScreenTransition) push
  * screens}.
  * <p>
  * Input listeners have to be added via the game's {@linkplain #inputProcessor
@@ -40,22 +38,27 @@ import de.eskalon.commons.utils.BasicInputMultiplexer;
  * @author damios
  */
 public class ManagedGame<S extends ManagedScreen, T extends ScreenTransition>
-		extends BasicApplication {
+		extends ApplicationAdapter {
 
 	/**
-	 * The input multiplexer of the game. Must (!) be used to add input
-	 * listeners instead of {@link Input#setInputProcessor(InputProcessor)}.
+	 * The input multiplexer of the game. Should be used to add input processors
+	 * instead of {@code Gdx.input.setInputProcessor(InputProcessor)}.
+	 * Otherwise, the automatic registration and unregistration of a
+	 * {@linkplain ManagedScreen#getInputProcessors() screen's input processors}
+	 * does not work.
 	 */
 	protected final BasicInputMultiplexer inputProcessor = new BasicInputMultiplexer();
 	/**
-	 * The game's screen manager. Is used to register and push new
-	 * screens/transitions.
+	 * The game's screen manager. Is used to push new screens/transitions.
 	 */
 	protected ScreenManager<S, T> screenManager;
 
+	public ManagedGame(ScreenManager<S, T> screenManager) {
+		this.screenManager = screenManager;
+	}
+
 	public ManagedGame() {
-		super();
-		this.screenManager = new ScreenManager<S, T>();
+		this(new ScreenManager<S, T>());
 	}
 
 	@Override
@@ -63,8 +66,8 @@ public class ManagedGame<S extends ManagedScreen, T extends ScreenTransition>
 		super.create();
 
 		Gdx.input.setInputProcessor(inputProcessor);
-		screenManager.initialize(inputProcessor, getWidth(), getHeight(),
-				false);
+		screenManager.initialize(inputProcessor, Gdx.graphics.getWidth(),
+				Gdx.graphics.getHeight(), false);
 	}
 
 	@Override
@@ -94,7 +97,6 @@ public class ManagedGame<S extends ManagedScreen, T extends ScreenTransition>
 										// Therefore, it is simply ignored.
 			return;
 
-		super.resize(width, height);
 		screenManager.resize(width, height);
 	}
 
@@ -112,6 +114,15 @@ public class ManagedGame<S extends ManagedScreen, T extends ScreenTransition>
 		return screenManager;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * <p>
+	 * Please note that, on Android, data stored in static variables may persist
+	 * past this stage and thus may still be accessible when the application is
+	 * run again. To prevent this, make sure to set all static variables to
+	 * {@code null} upon disposal of the application.
+	 * 
+	 */
 	@Override
 	public void dispose() {
 		screenManager.dispose();

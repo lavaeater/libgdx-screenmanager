@@ -15,11 +15,10 @@
 
 package de.eskalon.commons.screen.transition.impl;
 
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.utils.DefaultTextureBinder;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
@@ -29,12 +28,15 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import de.damios.guacamole.Preconditions;
+import de.damios.guacamole.annotations.Beta;
 import de.damios.guacamole.gdx.graphics.QuadMeshGenerator;
+import de.damios.guacamole.gdx.graphics.ShaderCompatibilityHelper;
 import de.damios.guacamole.gdx.graphics.ShaderProgramFactory;
 import de.eskalon.commons.screen.transition.TimedTransition;
 
 /**
  * A transition that is using a shader to render the two transitioning screens.
+ * Can be reused.
  * <p>
  * The following uniforms are set before rendering and thus have to be specified
  * in the shader code:
@@ -71,36 +73,9 @@ public class ShaderTransition extends TimedTransition {
 	private int progressLoc;
 
 	/**
-	 * Creates a shader transition.
-	 * <p>
-	 * The shader {@linkplain #compileShader(String, String, boolean) has to be
-	 * compiled} before {@link #create()} is called.
+	 * Creates a shader transition. Please note that this entails the shader
+	 * being compiled which needs to happen on the rendering thread!
 	 * 
-	 * @param duration
-	 * 
-	 * @see #ShaderTransition(OrthographicCamera, float, Interpolation)
-	 */
-	public ShaderTransition(float duration) {
-		this(duration, null);
-	}
-
-	/**
-	 * Creates a shader transition.
-	 * <p>
-	 * The shader {@linkplain #compileShader(String, String, boolean) has to be
-	 * compiled} before {@link #create()} is called.
-	 * 
-	 * @param duration
-	 *            the duration of the transition
-	 * @param interpolation
-	 *            the interpolation to use
-	 */
-	public ShaderTransition(float duration,
-			@Nullable Interpolation interpolation) {
-		super(duration, interpolation);
-	}
-
-	/**
 	 * @param vert
 	 *            the vertex shader code
 	 * @param frag
@@ -109,23 +84,59 @@ public class ShaderTransition extends TimedTransition {
 	 *            whether to ignore the code in
 	 *            {@link ShaderProgram#prependFragmentCode} and
 	 *            {@link ShaderProgram#prependVertexCode}
+	 * @param duration
+	 *            the transition's duration in seconds
+	 * 
+	 * @see #ShaderTransition(String, String, boolean, float, Interpolation)
 	 */
-	public void compileShader(String vert, String frag, boolean ignorePrepend) {
-		Preconditions.checkNotNull(vert, "The vertex shader cannot be null.");
-		Preconditions.checkNotNull(frag, "The fragment shader cannot be null.");
-
-		this.program = ShaderProgramFactory.fromString(vert, frag, true,
-				ignorePrepend);
+	public ShaderTransition(String vert, String frag, boolean ignorePrepend,
+			float duration) {
+		this(vert, frag, ignorePrepend, duration, null);
 	}
 
-	@Override
-	protected void create() {
-		Preconditions.checkState(this.program != null,
-				"The shader has to be compiled before the transition can be created!");
+	/**
+	 * Creates a shader transition. Please note that this entails the shader
+	 * being compiled which needs to happen on the rendering thread!
+	 * 
+	 * @param vert
+	 *            the vertex shader code
+	 * @param frag
+	 *            the fragment shader code
+	 * @param ignorePrepend
+	 *            whether to ignore the code in
+	 *            {@link ShaderProgram#prependFragmentCode} and
+	 *            {@link ShaderProgram#prependVertexCode}
+	 * @param duration
+	 *            the transition's duration in seconds
+	 * @param interpolation
+	 *            the interpolation to use
+	 */
+	public ShaderTransition(String vert, String frag, boolean ignorePrepend,
+			float duration, @Nullable Interpolation interpolation) {
+		this(vert, frag, ignorePrepend, duration, interpolation, false);
+	}
+
+	@Beta
+	public ShaderTransition(String vert, String frag, boolean ignorePrepend,
+			float duration, @Nullable Interpolation interpolation,
+			boolean useCompatibilityHandler) {
+		super(duration, interpolation);
+
+		Preconditions.checkNotNull(vert, "The vertex shader cannot be null.");
+		Preconditions.checkNotNull(frag, "The fragment shader cannot be null.");
 
 		this.viewport = new ScreenViewport(); // Takes care of rendering the
 												// transition over the whole
 												// screen
+
+		// Compile the shader; this needs to happen on the rendering thread!
+		if (useCompatibilityHandler)
+			this.program = ShaderCompatibilityHelper.fromString(vert, frag); // ignorePrepend
+																				// is
+																				// ignored
+		else
+			this.program = ShaderProgramFactory.fromString(vert, frag, true,
+					ignorePrepend);
 
 		this.projTransLoc = this.program.getUniformLocation("u_projTrans");
 		this.lastScreenLoc = this.program.getUniformLocation("lastScreen");
@@ -178,7 +189,7 @@ public class ShaderTransition extends TimedTransition {
 	}
 
 	/**
-	 * @return the used shader
+	 * @return the shader used by this transition
 	 */
 	public ShaderProgram getProgram() {
 		return program;

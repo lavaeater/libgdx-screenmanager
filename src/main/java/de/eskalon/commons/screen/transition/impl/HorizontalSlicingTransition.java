@@ -15,7 +15,7 @@
 
 package de.eskalon.commons.screen.transition.impl;
 
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -27,7 +27,8 @@ import de.damios.guacamole.Preconditions;
 import de.eskalon.commons.screen.transition.BatchTransition;
 
 /**
- * A transition where the new screen is sliding in in horizontal slices.
+ * A transition where the new screen is sliding in in horizontal slices. Can be
+ * reused.
  * 
  * @since 0.3.0
  * @author damios
@@ -38,11 +39,13 @@ public class HorizontalSlicingTransition extends BatchTransition {
 
 	/**
 	 * @param batch
-	 *            the sprite batch used to render
+	 *            the sprite batch used to render; is <i>not</i> disposed by the
+	 *            transition
 	 * @param sliceCount
 	 *            the count of slices used; has to be at least {@code 2}
 	 * @param duration
-	 *            the duration over which the transition should happen
+	 *            the duration (in seconds) over which the transition should
+	 *            happen
 	 * @param interpolation
 	 *            the interpolation used
 	 */
@@ -57,11 +60,13 @@ public class HorizontalSlicingTransition extends BatchTransition {
 
 	/**
 	 * @param batch
-	 *            the sprite batch used to render
+	 *            the sprite batch used to render; is <i>not</i> disposed by the
+	 *            transition
 	 * @param sliceCount
 	 *            the count of slices used; has to be at least {@code 2}
 	 * @param duration
-	 *            the duration over which the transition should happen
+	 *            the duration (in seconds) over which the transition should
+	 *            happen
 	 */
 	public HorizontalSlicingTransition(Batch batch, int sliceCount,
 			float duration) {
