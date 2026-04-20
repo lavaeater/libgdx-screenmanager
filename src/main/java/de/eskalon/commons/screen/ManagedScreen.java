@@ -15,8 +15,6 @@
 
 package de.eskalon.commons.screen;
 
-import org.jspecify.annotations.Nullable;
-
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.InputProcessor;
@@ -28,6 +26,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import de.eskalon.commons.core.ManagedGame;
 import de.eskalon.commons.screen.transition.ScreenTransition;
+
+import javax.annotation.Nullable;
 
 /**
  * A basic screen for use with a {@link ScreenManager}. To render it, the screen

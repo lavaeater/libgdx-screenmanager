@@ -15,12 +15,13 @@
 
 package de.eskalon.commons.screen.transition;
 
-import org.jspecify.annotations.Nullable;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 
 import de.damios.guacamole.Preconditions;
+
+import javax.annotation.Nullable;
 
 /**
  * A screen transition that lasts for a certain duration.

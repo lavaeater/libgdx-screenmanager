@@ -18,8 +18,6 @@ package de.eskalon.commons.screen;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import org.jspecify.annotations.Nullable;
-
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -40,6 +38,8 @@ import de.eskalon.commons.screen.transition.ScreenTransition;
 import de.eskalon.commons.utils.BasicInputMultiplexer;
 import de.eskalon.commons.utils.ScreenFboUtils;
 import de.eskalon.commons.utils.Supplier;
+
+import javax.annotation.Nullable;
 
 /**
  * A screen manager that handles the different screens of a game and their

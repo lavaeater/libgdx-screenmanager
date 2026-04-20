@@ -15,8 +15,6 @@
 
 package de.eskalon.commons.screen.transition;
 
-import org.jspecify.annotations.Nullable;
-
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -24,6 +22,8 @@ import com.badlogic.gdx.utils.Disposable;
 
 import de.eskalon.commons.screen.ManagedScreen;
 import de.eskalon.commons.screen.ScreenManager;
+
+import javax.annotation.Nullable;
 
 /**
  * A transition effect between two screen for use with a {@link ScreenManager}.
