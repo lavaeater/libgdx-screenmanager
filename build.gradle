@@ -1,8 +1,4 @@
 apply plugin: "java-library"
-apply plugin: "eclipse"
-apply plugin: "idea"
-apply plugin: "jacoco"
-apply plugin: "maven"
 
 version '0.7.1'
 
@@ -12,43 +8,7 @@ targetCompatibility = 1.8
 repositories {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
         maven { url "https://jitpack.io" }
-}
-
-// PUBLISH SOURCES & JAVADOC
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = "sources"
-    from sourceSets.main.allSource
-}
-
-javadoc {
-    failOnError = false
-    options.addStringOption('Xdoclint:none', '-quiet')
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = "javadoc"
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
-}
-
-install {
-  repositories.mavenInstaller {
-    pom.project {
-      licenses {
-        license {
-          name "The Apache Software License, Version 2.0"
-          url "http://www.apache.org/licenses/LICENSE-2.0.txt"
-          distribution "repo"
-        }
-      }
-    }
-  }
 }
 
 // DEPENDENCIES
@@ -80,19 +40,4 @@ test {
         events "failed"
         exceptionFormat "full"
     }
-    
-    finalizedBy(tasks.jacocoTestReport)
-}
-
-jacocoTestReport {
-    reports {
-        xml.enabled true
-        html.enabled false
-    }
-}
-
-check.dependsOn jacocoTestReport
-
-tasks.eclipse.doLast {
-    delete ".project"
 }
